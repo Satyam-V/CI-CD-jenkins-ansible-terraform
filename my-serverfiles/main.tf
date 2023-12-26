@@ -1,5 +1,26 @@
+data "aws_ami" "example" {
+  executable_users = ["self"]
+  most_recent      = true
+  name_regex       = "^myami-\\d{3}"
+  owners           = ["self"]
+
+  filter {
+    name   = "name"
+    values = ["myami-*"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
 resource "aws_instance" "test-server" {
-  ami           = data.aws_ami.latest_ubuntu.id 
+  ami           = data.aws_ami.example.id 
   instance_type = "t2.micro" 
   key_name = "jenkinsuse"
   vpc_security_group_ids= ["sg-01b7d18af5d6adf15"]
