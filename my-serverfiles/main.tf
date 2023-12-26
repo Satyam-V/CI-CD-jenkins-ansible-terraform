@@ -1,24 +1,3 @@
-data "aws_ami" "example" {
-  executable_users = ["self"]
-  most_recent      = true
-  name_regex       = "^myami-\\d{3}"
-  owners           = ["self"]
-
-  filter {
-    name   = "name"
-    values = ["myami-*"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-}
 resource "aws_instance" "test-server" {
   ami           = ami-0b98a32b1c5e0d105
   instance_type = "t2.micro" 
