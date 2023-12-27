@@ -15,31 +15,31 @@ pipeline {
                 }
             }
     
-//   stage('Package the Application') {
-//       steps {
-//         echo " Packaing the Application"
-//         sh 'mvn clean package'
-//             }
-//     }
+  stage('Package the Application') {
+      steps {
+        echo " Packaing the Application"
+        sh 'mvn clean package'
+            }
+    }
     
-//     stage('Publish Reports using HTML') {
-//       steps {
-//       publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/bankapp/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-//             }
-//         }
-//     stage('Docker Image Creation') {
-//       steps {
-//         sh 'docker build -t satyamv/bankapp:latest .'
-//             }
-//     }
-//     stage('Push Image to DockerHub') {
-//       steps {
-//           withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-//                 sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-//                 sh 'docker push satyamv/bankapp:latest'
-//             }
-//         }
-//     } 
+    stage('Publish Reports using HTML') {
+      steps {
+      publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/bankapp/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            }
+        }
+    stage('Docker Image Creation') {
+      steps {
+        sh 'docker build -t satyamv/bankapp:latest .'
+            }
+    }
+    stage('Push Image to DockerHub') {
+      steps {
+          withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                sh 'docker push satyamv/bankapp:latest'
+            }
+        }
+    } 
     stage ('create and configure Test-server with Terraform, Ansible and then Deploy'){
             steps {
                 dir('my-serverfiles'){
